@@ -1,9 +1,10 @@
 schema-version: 1.0.0
 application-family: Application Frameworks
 application-name: PHP
-flavor: Production
+flavor: Production - RCv3
 flavor-weight: 1
 popularity: 3
+rackconnect: true
 reach-info:
   icon-20x20: https://0b5294b243620310a700-e388a7f3aba385a925111b1fc6f680d4.ssl.cf2.rackcdn.com/php-icon-20x20.png
   tattoo: https://0b5294b243620310a700-e388a7f3aba385a925111b1fc6f680d4.ssl.cf2.rackcdn.com/php-tattoo.png
@@ -39,7 +40,7 @@ instructions: |
 
   [nginx](https://www.nginx.com/) was configured to serve contents out of /var/www/vhosts/example.com/httpdocs,
   where example.com is the domain that you provided during the setup.
-  
+
   [PHP-FPM](http://php-fpm.org/) was installed using the packaged version for
   the chosen operating system, in order to ensure that you have the latest
   stable release.
@@ -89,7 +90,7 @@ instructions: |
   make sure that you DO NOT change the "database_flavor" and "database_disk"
   parameters, as this will result in the loss of all data within the
   database.
-  
+
   This stack will not ensure that PHP or the servers themselves are
   up-to-date.  You are responsible for ensuring that all software is
   updated.
