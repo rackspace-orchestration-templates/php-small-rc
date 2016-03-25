@@ -1,19 +1,19 @@
 heat_template_version: 2015-10-15
 
 description: |
- #### Production
- This stack is intended for low to medium traffic production
- websites and can be scaled as needed to accommodate future
- growth.  This stack includes a Cloud Load Balancer, Cloud
- Database, and a Master server (plus optional secondary
- servers).  It also includes Cloud Monitoring and Cloud
- Backups.
+  #### Production
+  This stack is intended for low to medium traffic production
+  websites and can be scaled as needed to accommodate future
+  growth.  This stack includes a Cloud Load Balancer, Cloud
+  Database, and a Master server (plus optional secondary
+  servers).  It also includes Cloud Monitoring and Cloud
+  Backups.
 
- This stack is running the latest version of
- [nginx](https://www.nginx.com/),
- and [PHP FPM](http://php-fpm.org/).
- with a Cloud Database running
- [MySQL 5.6](http://www.mysql.com/about/).
+  This stack is running the latest version of
+  [nginx](https://www.nginx.com/),
+  and [PHP FPM](http://php-fpm.org/).
+  with a Cloud Database running
+  [MySQL 5.6](http://www.mysql.com/about/).
 parameter_groups:
 - label: PHP Settings
   parameters:
@@ -113,14 +113,14 @@ parameters:
       - 16GB Instance
       - 32GB Instance
       - 64GB Instance
- server_image:
-   type: string
-   default: f4bbbce2-50b0-4b07-bf09-96c175a45f4b
-   label: Server Image
-   description: Image to be used for all servers in this stack
-   constraints:
-   - allowed_values:
-     - f4bbbce2-50b0-4b07-bf09-96c175a45f4b
+  server_image:
+    type: string
+    default: f4bbbce2-50b0-4b07-bf09-96c175a45f4b
+    label: Server Image
+    description: Image to be used for all servers in this stack
+    constraints:
+    - allowed_values:
+      - f4bbbce2-50b0-4b07-bf09-96c175a45f4b
   server_count:
     type: number
     default: 0
@@ -132,7 +132,7 @@ parameters:
     type: string
     default: 2 GB General Purpose v1
     label: Server Flavor
-    description: Flavor of Cloud Server to use for WordPress
+    description: Flavor of Cloud Server to use for the load balancer
     constraints:
     - allowed_values:
       - 2 GB General Purpose v1
