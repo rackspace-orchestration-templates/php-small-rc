@@ -1,7 +1,7 @@
 heat_template_version: 2015-10-15
 
 description: |
-  #### Production
+  #### Production - RCv3
   This stack is intended for low to medium traffic production
   websites and can be scaled as needed to accommodate future
   growth.  This stack includes a Cloud Load Balancer, Cloud
