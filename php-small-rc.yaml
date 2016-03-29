@@ -14,6 +14,8 @@ description: |
   and [PHP FPM](http://php-fpm.org/).
   with a Cloud Database running
   [MySQL 5.6](http://www.mysql.com/about/).
+
+  This template will only function with RackConnect v3.
 parameter_groups:
 - label: PHP Settings
   parameters:
