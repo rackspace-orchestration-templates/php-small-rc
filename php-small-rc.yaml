@@ -30,8 +30,7 @@ parameter_groups:
   parameters:
   - server_image
   - secondary_template
-  - ansible_branch
-  - ansible_repo
+  - ansible_source
 
 parameters:
   #PHP Customization
@@ -155,17 +154,11 @@ parameters:
     label: Secondary Template
     description: Template to use for secondary servers
     immutable: true
-  ansible_branch:
+  ansible_source:
     type: string
-    default: stable
-    label: Git Branch or Tag for Ansible Roles
-    description: The Ansible Roles will be pulled from Git, using the tag or branch provided
-    immutable: true
-  ansible_repo:
-    type: string
-    default: https://github.com/rackspace-orchestration-templates/ansible-roles.git
-    label: Git Repo for Ansible Roles
-    description: The Ansible Roles will be pulled from Git, using the repo provided
+    default: http://catalog.rs-heat.com/ansible-roles/ansible-roles.tar.gz
+    label: Ansible Tarball
+    description: The Ansible Roles will be pulled from the location provided
     immutable: true
 
 resources:
@@ -214,10 +207,12 @@ resources:
           template: |
             #!/bin/bash
             set -e
-            git clone -b 'tag' --single-branch --progress repository /etc/ansible/roles > $heat_outputs_path.results 2>&1
+            mkdir -p /etc/ansible/roles
+            wget ansible_source -O /tmp/ansible-roles.tar.gz 2>&1
+            tar -xf /tmp/ansible-roles.tar.gz --strip-components=1 -C /etc/ansible/roles
           params:
-            tag: { get_param: ansible_branch}
-            repository: { get_param: ansible_repo }
+            ansible_source: { get_param: ansible_source }
+
 
   php_config:
     type: OS::Heat::SoftwareConfig
@@ -317,7 +312,7 @@ resources:
       user_data_format: SOFTWARE_CONFIG
       networks:
       - network: { get_param: rc_network_name }
-      - uuid: 11111111-1111-1111-1111-111111111111
+      - network: 11111111-1111-1111-1111-111111111111
       metadata:
         rax-heat: { get_param: "OS::stack_id" }
         build_config: "backup_agent_only,monitoring_agent_only"
@@ -480,7 +475,7 @@ resources:
       user_data_format: SOFTWARE_CONFIG
       networks:
       - network: { get_param: rc_network_name }
-      - uuid: 11111111-1111-1111-1111-111111111111
+      - network: 11111111-1111-1111-1111-111111111111
       metadata:
         rax-heat: { get_param: "OS::stack_id" }
         build_config: "monitoring_agent_only"
