@@ -150,7 +150,7 @@ parameters:
     immutable: true
   secondary_template:
     type: string
-    default: https://raw.githubusercontent.com/rackspace-orchestration-templates/php-small-rc/stable/php-small-rc-secondary.yaml
+    default: http://catalog.rs-heat.com/php-small-rc/php-small-rc-secondary.yaml
     label: Secondary Template
     description: Template to use for secondary servers
     immutable: true
@@ -399,8 +399,7 @@ resources:
                 stack: { get_param: "OS::stack_name" }
           master_server: { get_attr: [php_server, networks, { get_param: rc_network_name }, 0] }
           rc_network_name: { get_param: rc_network_name }
-          ansible_branch: { get_param: ansible_branch}
-          ansible_repo: { get_param: ansible_repo }
+          ansible_source: { get_param: ansible_source}
   #nginx load balancer
   upload_lb_role_config:
     type: OS::Heat::SoftwareConfig
@@ -413,10 +412,11 @@ resources:
           template: |
             #!/bin/bash
             set -e
-            git clone -b 'tag' --single-branch --progress repository /etc/ansible/roles > $heat_outputs_path.results 2>&1
+            mkdir -p /etc/ansible/roles
+            wget ansible_source -O /tmp/ansible-roles.tar.gz 2>&1
+            tar -xf /tmp/ansible-roles.tar.gz --strip-components=1 -C /etc/ansible/roles
           params:
-            tag: { get_param: ansible_branch}
-            repository: { get_param: ansible_repo }
+            ansible_source: { get_param: ansible_source }
   deploy_lb_roles:
     type: OS::Heat::SoftwareDeployment
     properties:
